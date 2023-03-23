@@ -1,4 +1,4 @@
-/*
+
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
@@ -8,7 +8,7 @@ import {helpers} from './utils/handlebar-util'
 
 
 import exphbs from 'express-handlebars';
-import {sessionUserSettings, Settings} from "./utils/session-middleware";
+import {sessionUserSettings, Settings} from "./utils/session-middleware.index";
 
 declare module 'express-session' {
     interface SessionData {
@@ -45,4 +45,4 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
-*/
+
