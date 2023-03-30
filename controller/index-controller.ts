@@ -1,10 +1,12 @@
 class IndexController {
     index = (req: any, res: any) => {
-        const settings =  req.session.settings;
-        res.render("index", { data: "Hello Wddorlddd", 
-        dark: settings.dark, 
-        title: "Home page",
-        });
+        const dark = req.query.toggle_style === "true";
+        if (dark) {
+            req.userSettings.dark = !req.userSettings.dark;
+            res.redirect(req.originalUrl.split("?")[0]);
+        } else {
+            res.render("index", { data: "Hello Wddorlddd", dark: req.userSettings.dark, title: "Home page" });
+        }
     };
 }
 

@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import session from 'express-session';
 import {indexRoutes} from './routes/index-routes';
-import {helpers} from './utils/handlebar-util'
+import { todoRoutes } from './routes/todo-routes';
+import {helpers} from './utils/handlebar-util';
 
 
 import exphbs from 'express-handlebars';
@@ -41,8 +42,10 @@ app.use(express.static(path.resolve('public')));
 app.use(session({secret: 'casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda', resave: false, saveUninitialized: true}));
 
 app.use(sessionUserSettings)
+
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
+app.use("/todo", todoRoutes);
 
