@@ -5,7 +5,7 @@ class IndexController {
             req.userSettings.dark = !req.userSettings.dark;
             res.redirect(req.originalUrl.split("?")[0]);
         } else {
-            res.render("index", { data: "Hello Wddorlddd", dark: req.userSettings.dark, title: "Home page" });
+            res.render("index", { data: "Hello World index", dark: req.userSettings.dark, title: "Home page" });
         }
     };
 }
