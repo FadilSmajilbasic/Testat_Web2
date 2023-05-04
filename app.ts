@@ -10,6 +10,7 @@ import {helpers} from './utils/handlebar-util';
 
 import exphbs from 'express-handlebars';
 import {sessionUserSettings, Settings} from "./utils/session-middleware.index";
+import { createTaskRoutes } from './routes/createTask-routes';
 
 declare module 'express-session' {
     interface SessionData {
@@ -48,4 +49,6 @@ app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
 app.use("/todo", todoRoutes);
+app.use("/createTask", createTaskRoutes);
+
 
