@@ -1,6 +1,7 @@
 class TodoController {
     newTodo = (req: any, res: any) => {
         const dark = req.query.toggle_style === "true";
+        const update = req.query.update === "true";
 
         if (dark) {
             req.userSettings.dark = !req.userSettings.dark;
@@ -11,6 +12,7 @@ class TodoController {
                 dark: req.userSettings.dark,
                 title: "New Todo",
                 today: this.getDay(),
+                submitText: update ? "Update" : "Create",
             });
         }
     };
