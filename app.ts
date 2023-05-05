@@ -1,18 +1,14 @@
+import express from "express";
+import bodyParser from "body-parser";
+import path from "path";
+import session from "express-session";
+import { indexRoutes } from "./routes/index-routes";
+import { helpers } from "./utils/handlebar-util";
+import exphbs from "express-handlebars";
+import { sessionUserSettings, Settings } from "./utils/session-middleware.index";
+import { taskRoutes } from "./routes/task-routes";
 
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import session from 'express-session';
-import {indexRoutes} from './routes/index-routes';
-import { todoRoutes } from './routes/todo-routes';
-import {helpers} from './utils/handlebar-util';
-
-
-import exphbs from 'express-handlebars';
-import {sessionUserSettings, Settings} from "./utils/session-middleware.index";
-import { createTaskRoutes } from './routes/createTask-routes';
-
-declare module 'express-session' {
+declare module "express-session" {
     interface SessionData {
         settings: Settings;
     }
@@ -28,27 +24,24 @@ declare global {
 
 export const app = express();
 const hbs = exphbs.create({
-    extname: '.hbs',
+    extname: ".hbs",
     defaultLayout: "default",
     helpers: {
-        ...helpers
-    }
+        ...helpers,
+    },
 });
 
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-app.set('views', path.resolve('views'));
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
+app.set("views", path.resolve("views"));
 
-app.use(express.static(path.resolve('public')));
-app.use(session({secret: 'casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda', resave: false, saveUninitialized: true}));
+app.use(express.static(path.resolve("public")));
+app.use(session({ secret: "casduichasidbnuwezrfinasdcvjkadfhsuilfuzihfioda", resave: false, saveUninitialized: true }));
 
-app.use(sessionUserSettings)
+app.use(sessionUserSettings);
 
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/", indexRoutes);
-app.use("/todo", todoRoutes);
-app.use("/createTask", createTaskRoutes);
-
-
+app.use("/task", taskRoutes);
