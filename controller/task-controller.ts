@@ -3,7 +3,6 @@ import { taskStore } from "../utils/task-store";
 class TaskController {
     index = (req: any, res: any) => {
         const dark = req.query.toggleStyle === "true";
-        const update = req.query.update === "true";
 
         if (dark) {
             req.userSettings.dark = !req.userSettings.dark;
@@ -13,7 +12,8 @@ class TaskController {
                 dark: req.userSettings.dark,
                 title: "New Task",
                 today: this.getDay(),
-                submitText: update ? "Update" : "Create",
+                dueDate: this.getDay(),
+                submitText: "Create",
             });
         }
     };
@@ -27,13 +27,95 @@ class TaskController {
     }
 
     create = (req: any, res: any) => {
-        console.log(req.body.dueDate);
+        const id = req.url.split("/")[2];
+        const action: string = req.body.action;
 
-        taskStore.add(req.body.title, req.body.importance, req.body.description, req.body.dueDate, req.body.done, function (err: any, doc: any) {
+        if (action === "Overview") {
+            // Overview case
+            res.redirect("/");
+        } else if (action?.includes("Update")) {
+            taskStore.update(
+                id,
+                req.body.title,
+                req.body.importance,
+                req.body.description,
+                new Date(req.body.dueDate).toISOString(),
+                req.body.done === "on",
+                function (err: any, task: any) {
+                    if (err) {
+                        console.log("Error updating task: " + err);
+                        res.redirect("/?errorMessage=" + err);
+                    }
+                    if (action.includes("Overview")) {
+                        // Update and Overview case
+                        res.redirect("/");
+                    } else {
+                        // Update case
+
+                        res.redirect("/task/edit/" + id + "/");
+                    }
+                }
+            );
+        } else {
+            taskStore.add(
+                req.body.title,
+                req.body.importance,
+                req.body.description,
+                new Date(req.body.dueDate).toISOString(),
+                function (err: any, task: any) {
+                    if (err) {
+                        console.log("Error creating task: " + err);
+                        res.redirect("/?errorMessage=" + err);
+                    }
+                    if (action?.includes("Overview")) {
+                        // Create and Overview case
+                        res.redirect("/");
+                    } else {
+                        // Create case
+                        res.redirect("/task/edit/" + task._id + "/");
+                    }
+                }
+            );
+        }
+    };
+
+    edit = (req: any, res: any) => {
+        const id = req.url.split("/")[2];
+        const currentDate = this.getDay();
+        taskStore.get(id, function (err: any, task: any) {
             if (err) {
-                console.log("Error inserting document: " + err);
+                console.log("Task not found: " + err);
+                res.redirect("/?errorMessage=" + err);
             }
-            res.redirect("/?errorMessage=" + err);
+            if (task == null) {
+                console.log("Task not found: " + id);
+                res.redirect("/?errorMessage=Task not found with id: " + id);
+            }
+            res.render("task-create", {
+                dark: req.userSettings.dark,
+                title: "Edit Task",
+                task: task,
+                today: currentDate,
+                dueDate: new Date(task.dueDate).toISOString().split("T")[0],
+                submitText: "Update",
+                edit: true,
+                low_checked: task.importance === "Low" ? "checked" : "",
+                medium_checked: task.importance === "Medium" ? "checked" : "",
+                high_checked: task.importance === "High" ? "checked" : "",
+                urgent_checked: task.importance === "Urgent" ? "checked" : "",
+                checked: task.done ? "checked" : "",
+            });
+        });
+    };
+
+    delete = (req: any, res: any) => {
+        const id = req.url.split("/")[2];
+        taskStore.delete(id, function (err: any, task: any) {
+            if (err) {
+                console.log("Error deleting task: " + err);
+                res.redirect("/?errorMessage=" + err);
+            }
+            res.redirect("/");
         });
     };
 }

@@ -1,23 +1,24 @@
 <div class="row align-items-center" style="height: 100vh;">
-    <div class="mx-auto" style="width:auto">
-        <form class="container" action="/task/create" method="post">
+    <div class="mx-auto" style="width:40%">
+        <form class="container bg-light rounded border border-light " action="/task/create/{{task._id}}" method="post">
             <div class="form-group row">
                 <div class="col">
                     <label for="titleInput">Title: </label>
                 </div>
                 <div class="col-lg">
-                    <input id="titleInput" type="text" class="mx-2" name="title" placeholder="Enter name" required />
+                    <input id="titleInput" type="text" class="w-100" name="title" placeholder="Enter name" value="{{task.title}}" required />
+
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col">
                     <label class="form-check-label">Importance: </label>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="0" required />Low
-                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="1" />Medium
-                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="2" />High
-                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="3" />Urgent!
+                <div class="col d-flex justify-content-between">
+                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="0" {{low_checked}} required />Low
+                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="1" {{medium_checked}} />Medium
+                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="2" {{high_checked}} />High
+                    <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="3" {{urgent_checked}} />Urgent!
                 </div>
             </div>
 
@@ -26,7 +27,7 @@
                     <label for="dateInput">Due Date:</label>
                 </div>
                 <div class="col-lg">
-                    <input id="dateInput" name="dueDate" type="date" min="{{today}}" value="{{today}}" required />
+                    <input id="dateInput" name="dueDate" type="date" value="{{dueDate}}" required />
                 </div>
             </div>
             <div class="form-group row">
@@ -36,17 +37,27 @@
                 </div>
                 <div class="col-lg">
 
-                    <textarea id="descriptionTextArea" class="w-100" type="text" name="description" placeholder="Description"></textarea>
+                    <textarea
+                        id="descriptionTextArea"
+                        wrap="soft"
+                        class="w-100"
+                        type="text"
+                        name="description"
+                        placeholder="Description"
+                    >{{task.description}}</textarea>
                 </div>
-
             </div>
-            <div class="d-flex row">
-                <div class="col">
-
-                    <input class="btn btn-primary m-2" type="submit" value="{{submitText}}" />
-                    <a class="btn btn-primary m-2" href="/createTask?forward=true">{{submitText}} &amp; Overview</a>
-                    <a class="btn btn-primary m-2" href="/">Overview</a>
+            {{#if edit}}
+                <div class="d-flex col checkbox-xl my-3">
+                    <label class="form-check-label me-4" for="completedCheckbox">Completed:</label>
+                    <input class="form-check-input ms-4" type="checkbox" id="completedCheckbox" name="done" {{checked}} />
                 </div>
+            {{/if}}
+            <div class="d-flex justify-content-lg-center col">
+                <input class="btn btn-primary m-2" name="action" type="submit" value="{{submitText}}" />
+                <input class="btn btn-primary m-2" name="action" type="submit" value="{{submitText}} &amp; Overview"/>
+                <input class="btn btn-primary m-2" name="action" type="submit" value="Overview"/>
+
             </div>
         </form>
     </div>
