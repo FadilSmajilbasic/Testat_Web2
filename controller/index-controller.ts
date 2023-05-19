@@ -25,11 +25,11 @@ class IndexController {
             return a.title.localeCompare(b.title);
         })
     }
-    private sortByDate(queryResult:any) {
-        queryResult.sort(function(a:TaskType, b:TaskType){
-            return new Date(a.dueDate).is (b.title);
-        })
-    }
+//     private sortByDate(queryResult:any) {
+//         queryResult.sort(function(a:TaskType, b:TaskType){
+//             return new Date(a.dueDate).is (b.title);
+//         })
+//     }
 }
 
 export const indexController = new IndexController();
