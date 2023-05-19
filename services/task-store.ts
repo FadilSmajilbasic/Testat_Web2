@@ -1,5 +1,5 @@
 import Datastore from "@seald-io/nedb";
-import { TaskType } from "./types";
+import { TaskType } from "../utils/types";
 
 const db = new Datastore({ filename: "./data/tasks.db", autoload: true });
 

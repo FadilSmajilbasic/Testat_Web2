@@ -7,3 +7,11 @@ export type TaskType = {
     dueDate: string;
     done: boolean;
 };
+
+export type Settings = {
+    orderBy: string;
+    orderDirection: boolean;
+    dark: boolean;
+    filterCompleted: boolean;
+    errorMessage: string;
+};

@@ -1,4 +1,4 @@
-import { taskStore } from "../utils/task-store";
+import { taskStore } from "../services/task-store";
 
 class TaskController {
     index = (req: any, res: any) => {
