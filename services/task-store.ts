@@ -30,11 +30,18 @@ class TaskStore {
         });
     }
 
-    getAll(callback: (err: any, task: any) => void) {
-        db.find({}, function (err: any, docs: any) {
-            callback(err, docs);
-        });
+    getAll(callback: (err: any, task: any) => void, filterCompleted = false) {
+        if (filterCompleted) {
+            db.find({ done: filterCompleted }, function (err: any, docs: any) {
+                callback(err, docs);
+            });
+        } else {
+            db.find({}, function (err: any, docs: any) {
+                callback(err, docs);
+            });
+        }
     }
+
     private getImportance(importance: number): string {
         switch (importance) {
             case 0:
