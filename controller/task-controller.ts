@@ -99,10 +99,10 @@ class TaskController {
                 dueDate: new Date(task.dueDate).toISOString().split("T")[0],
                 submitText: "Update",
                 edit: true,
-                low_checked: task.importance === "Low" ? "checked" : "",
-                medium_checked: task.importance === "Medium" ? "checked" : "",
-                high_checked: task.importance === "High" ? "checked" : "",
-                urgent_checked: task.importance === "Urgent" ? "checked" : "",
+                low_checked: task.importance === 0 ? "checked" : "",
+                medium_checked: task.importance === 1 ? "checked" : "",
+                high_checked: task.importance === 2 ? "checked" : "",
+                urgent_checked: task.importance === 3 ? "checked" : "",
                 checked: task.done ? "checked" : "",
             });
         });

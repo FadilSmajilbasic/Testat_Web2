@@ -7,7 +7,7 @@ class TaskStore {
     add(title: string, importance: string, description: string, dueDate: string, callback: (err: any, task: any) => void) {
         const task = {
             title: title,
-            importance: this.getImportance(Number(importance)),
+            importance: Number(importance),
             description: description,
             creationDate: new Date(),
             dueDate: new Date(dueDate).toLocaleDateString(),
@@ -42,20 +42,6 @@ class TaskStore {
         }
     }
 
-    private getImportance(importance: number): string {
-        switch (importance) {
-            case 0:
-                return "Low";
-            case 1:
-                return "Medium";
-            case 2:
-                return "High";
-            case 3:
-                return "Urgent";
-        }
-        return "Unknown";
-    }
-
     update(
         id: number,
         title: string,
@@ -67,7 +53,7 @@ class TaskStore {
     ) {
         const task = {
             title: title,
-            importance: this.getImportance(Number(importance)),
+            importance: Number(importance),
             description: description,
             creationDate: new Date(),
             dueDate: new Date(dueDate).toLocaleDateString(),

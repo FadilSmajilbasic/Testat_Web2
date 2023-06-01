@@ -11,10 +11,10 @@
         </div>
         <div class="d-flex justify-content-between mx-4">
             <div class="d-flex">
-                <a href="/?orderDirection=true&orderBy='title'" class="btn btn-primary me-2">Title  {{orderIcon}}</a>
-                <a href="/?orderDirection=true&orderBy='dueDate'" class="btn btn-primary mx-2">By Due Date  {{orderIcon}}</a>
-                <a href="/?orderDirection=true&orderBy='creationDate'" class="btn btn-primary mx-2">By Creation Date  {{orderIcon}}</a>
-                <a href="/?orderDirection=true&orderBy='importance'" class="btn btn-primary mx-2">By Importance  {{orderIcon}}</a>
+                <a href="/?orderDirection=true&orderBy=title" class="btn btn-primary me-2">Title  {{orderIcon}}</a>
+                <a href="/?orderDirection=true&orderBy=dueDate" class="btn btn-primary mx-2">By Due Date  {{orderIcon}}</a>
+                <a href="/?orderDirection=true&orderBy=creationDate" class="btn btn-primary mx-2">By Creation Date  {{orderIcon}}</a>
+                <a href="/?orderDirection=true&orderBy=importance" class="btn btn-primary mx-2">By Importance  {{orderIcon}}</a>
 
             </div>
             <a href="/?filterCompleted=true" class="btn btn-primary ">Filter Completed</a>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row">
                             <p>Due date: <span class="text-muted">{{this.dueDate}}</span></p>
-                            <p>Importance: <span>{{this.importance}}</span></p>
+                            <p>Importance: <span>{{getImportance this.importance}}</span></p>
                             <div class="d-flex col checkbox-xl my-1">
                                 <label class="form-check-label" for="completedCheckbox">Completed:</label>
                                 <input

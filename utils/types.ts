@@ -1,7 +1,7 @@
 export type TaskType = {
     id: number;
     title: string;
-    importance: string;
+    importance: number;
     description: string;
     creationDate: Date;
     dueDate: string;
