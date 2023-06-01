@@ -5,8 +5,9 @@ import session from "express-session";
 import { indexRoutes } from "./routes/index-routes";
 import { helpers } from "./utils/handlebar-util";
 import exphbs from "express-handlebars";
-import { sessionUserSettings, Settings } from "./utils/session-middleware.index";
+import { sessionUserSettings } from "./utils/session-middleware.index";
 import { taskRoutes } from "./routes/task-routes";
+import { Settings } from "./utils/types";
 
 declare module "express-session" {
     interface SessionData {

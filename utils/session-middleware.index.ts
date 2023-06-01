@@ -18,7 +18,7 @@ export const sessionUserSettings = (req: any, res: any, next: any): void => {
     }
     userSettings.errorMessage = errorMessage?.toString().length > 0 ? errorMessage.toString() : "";
 
-    req.userSettings = req.session.userSettings = userSettings;    
+    req.userSettings = req.session.userSettings = userSettings;
 
     if (req.originalUrl.split("?").length > 1) {
         res.redirect(req.originalUrl.split("?")[0]);

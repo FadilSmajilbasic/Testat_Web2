@@ -10,6 +10,12 @@ class IndexController {
         taskStore.getAll((err, task) => {
             console.log(task);
 
+            if (req.userSettings.orderByTitle) {
+                task = this.sortByTitle(task);
+            } else {
+                task = this.sortByDate(task);
+            }
+
             res.render("index", {
                 dark: req.userSettings.dark,
                 title: "Home page",
@@ -21,15 +27,24 @@ class IndexController {
     };
 
     private sortByTitle(queryResult:any) {
-        queryResult.sort(function(a:TaskType, b:TaskType){
+        return queryResult.sort(function(a:TaskType, b:TaskType){
             return a.title.localeCompare(b.title);
         })
     }
-//     private sortByDate(queryResult:any) {
-//         queryResult.sort(function(a:TaskType, b:TaskType){
-//             return new Date(a.dueDate).is (b.title);
-//         })
-//     }
+    private sortByDate(queryResult:any) {
+        return queryResult.sort(function(a:TaskType, b:TaskType){
+            const date1 = new Date(a.dueDate);
+            const date2 = new Date(b.dueDate);
+
+            if (date1 > date2) {
+                return 1;
+              } else if (date1 < date2) {
+                return -1;
+              } else {
+                return 0;
+              }
+        })
+    }
 }
 
 export const indexController = new IndexController();
