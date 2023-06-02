@@ -70,9 +70,9 @@ class IndexController {
     private sortByImportance(task: any, orderDirection: any): any {
         return task.sort(function (a: TaskType, b: TaskType) {
             if (orderDirection) {
-                return a.importance - b.importance;
-            } else {
                 return b.importance - a.importance;
+            } else {
+                return a.importance - b.importance;
             }
         });
     }
