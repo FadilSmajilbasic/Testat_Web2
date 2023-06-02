@@ -9,7 +9,7 @@ class TaskController {
             res.redirect(req.originalUrl.split("?")[0]);
         } else {
             res.render("task-create", {
-                dark: req.userSettings.dark,
+                style: req.userSettings.dark?"dark":"light",
                 title: "New Task",
                 today: this.getDay(),
                 dueDate: this.getDay(),

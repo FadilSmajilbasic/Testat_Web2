@@ -3,12 +3,12 @@ import { Settings } from "./types";
 export const sessionUserSettings = (req: any, res: any, next: any): void => {
     const userSettings: Settings = req.session?.userSettings || { orderBy: "title", orderDirection: false, dark: false, filterCompleted: false };
 
-    const { orderBy, orderDirection, toggleStyle, errorMessage, filterCompleted } = req.query;
+    const { orderBy, toggleStyle, errorMessage, filterCompleted } = req.query;
     if (orderBy) {
+        if (userSettings.orderBy === orderBy) {
+            userSettings.orderDirection = !userSettings.orderDirection;
+        }
         userSettings.orderBy = orderBy;
-    }
-    if (orderDirection) {
-        userSettings.orderDirection = !userSettings.orderDirection;
     }
     if (toggleStyle) {
         userSettings.dark = !userSettings.dark;

@@ -16,4 +16,7 @@ export const helpers = {
         }
         return "Unknown";
     },
+    ifDone(done: boolean): any {
+        return done? "checked" : "";
+    },
 };

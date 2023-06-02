@@ -27,11 +27,11 @@ class IndexController {
             }
 
             res.render("index", {
-                dark: req.userSettings.dark,
+                style: req.userSettings.dark?"dark":"light",
                 title: "Home page",
                 tasks: task,
                 errorMessage: errorMessage?.length > 0 ? errorMessage.toString() : err?.toString(),
-                orderIcon: req.userSettings.orderDirection ? "▽" : "△",
+                orderIcon: req.userSettings.orderDirection ? " ▽ " : " △ ",
             });
         }, req.userSettings.filterCompleted);
     };
