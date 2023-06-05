@@ -16,8 +16,9 @@ export const sessionUserSettings = (req: any, res: any, next: any): void => {
     if (filterCompleted) {
         userSettings.filterCompleted = !userSettings.filterCompleted;
     }
-    userSettings.errorMessage = errorMessage?.toString().length > 0 ? errorMessage.toString() : "";
-
+    if(errorMessage){
+        userSettings.errorMessage = errorMessage;
+    }
     req.userSettings = req.session.userSettings = userSettings;
 
     if (req.originalUrl.split("?").length > 1) {

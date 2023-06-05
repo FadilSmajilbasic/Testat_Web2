@@ -6,6 +6,7 @@ class IndexController {
         const errorMessage = req.userSettings.errorMessage;
         if (errorMessage?.length > 0) {
             req.userSettings.errorMessage = "";
+            taskStore.newDb();
         }
 
         taskStore.getAll((err, task) => {

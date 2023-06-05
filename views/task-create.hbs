@@ -24,7 +24,7 @@
                 <div class="col">
                     <label class="form-check-label">Importance: </label>
                 </div>
-                <div class="col d-flex justify-content-between">
+                <div class="col d-flex flex-wrap justify-content-between">
                     <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="0" {{low_checked}} required />Low
                     <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="1" {{medium_checked}} />Medium
                     <input type="radio" class="form-check-input mr-3" name="importance" id="fm3" value="2" {{high_checked}} />High
@@ -63,9 +63,9 @@
                     <input class="form-check-input ms-4" type="checkbox" id="completedCheckbox" name="done" {{checked}} />
                 </div>
             {{/if}}
-            <div class="d-flex justify-content-lg-center col">
+            <div class="d-flex flex-wrap justify-content-lg-center col">
                 <input class="btn btn-primary m-2" name="action" type="submit" value="{{submitText}}" />
-                <input class="btn btn-primary m-2" name="action" type="submit" value="{{submitText}} &amp; Overview" />
+                <input class="btn text-wrap btn-primary m-2" name="action" type="submit" value="{{submitText}} &amp; Overview" />
                 <a class="btn btn-primary m-2" href="/">Overview</a>
             </div>
         </form>

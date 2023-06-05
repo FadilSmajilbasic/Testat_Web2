@@ -1,7 +1,7 @@
 import Datastore from "@seald-io/nedb";
 import { TaskType } from "../utils/types";
 
-const db = new Datastore({ filename: "./data/tasks.db", autoload: true });
+let db = new Datastore({ filename: "./data/tasks.db", autoload: true });
 
 class TaskStore {
     add(task: TaskType, callback: (err: any, task: any) => void) {
@@ -26,6 +26,9 @@ class TaskStore {
 
     update(task: TaskType, callback: (err: any, task: any) => void) {
         db.update({ _id: task.id }, task, {}, callback);
+    }
+    newDb() {
+        db = new Datastore({ filename: "./data/tasks.db", autoload: true });
     }
 }
 
