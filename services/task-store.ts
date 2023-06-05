@@ -5,39 +5,27 @@ const db = new Datastore({ filename: "./data/tasks.db", autoload: true });
 
 class TaskStore {
     add(task: TaskType, callback: (err: any, task: any) => void) {
-        db.insert(task, function (err, task) {
-            callback(err, task);
-        });
+        db.insert(task, callback);
     }
 
     delete(id: string, callback: (err: any, task: any) => void) {
-        db.remove({ _id: id }, {}, function (err, numRemoved) {
-            callback(err, numRemoved);
-        });
+        db.remove({ _id: id }, {}, callback);
     }
 
     get(id: string, callback: (err: any, task: any) => void) {
-        db.findOne({ _id: id }, function (err, task) {
-            callback(err, task);
-        });
+        db.findOne({ _id: id }, callback);
     }
 
     getAll(callback: (err: any, task: any) => void, filterCompleted = false) {
         if (filterCompleted) {
-            db.find({ done: filterCompleted }, function (err: any, docs: any) {
-                callback(err, docs);
-            });
+            db.find({ done: filterCompleted }, callback);
         } else {
-            db.find({}, function (err: any, docs: any) {
-                callback(err, docs);
-            });
+            db.find({}, callback);
         }
     }
 
     update(task: TaskType, callback: (err: any, task: any) => void) {
-        db.update({ _id: task.id }, task, {}, function (err, numReplaced) {
-            callback(err, numReplaced);
-        });
+        db.update({ _id: task.id }, task, {}, callback);
     }
 }
 

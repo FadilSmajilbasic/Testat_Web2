@@ -41,7 +41,7 @@ class TaskController {
         } as TaskType;
 
         if (action?.includes("Update")) {
-            taskStore.update({ ...task, id: urlId }, function (err: any, task: any) {
+            taskStore.update({ ...task, id: urlId }, (err: any, task: any) => {
                 if (err) {
                     res.redirect("/?errorMessage=" + err);
                 }
@@ -54,7 +54,7 @@ class TaskController {
                 }
             });
         } else {
-            taskStore.add(task, function (err: any, task: any) {
+            taskStore.add(task, (err: any, task: any) => {
                 if (err) {
                     res.redirect("/?errorMessage=" + err);
                 }
@@ -72,7 +72,7 @@ class TaskController {
     edit = (req: any, res: any) => {
         const id = req.url.split("/")[2];
         const currentDate = this.getDay();
-        taskStore.get(id, function (err: any, task: any) {
+        taskStore.get(id, (err: any, task: any) => {
             if (err) {
                 res.redirect("/?errorMessage=" + err);
             }
@@ -98,7 +98,7 @@ class TaskController {
 
     delete = (req: any, res: any) => {
         const id = req.url.split("/")[2];
-        taskStore.delete(id, function (err: any, task: any) {
+        taskStore.delete(id, (err: any, task: any) => {
             if (err) {
                 res.redirect("/?errorMessage=" + err);
             }

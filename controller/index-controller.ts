@@ -35,7 +35,7 @@ class IndexController {
     };
 
     private sortByTitle(queryResult: any, direction: boolean) {
-        return queryResult.sort(function (a: TaskType, b: TaskType) {
+        return queryResult.sort((a: TaskType, b: TaskType) => {
             if (direction) {
                 return b.title.localeCompare(a.title);
             } else {
@@ -44,7 +44,7 @@ class IndexController {
         });
     }
     private sortByDate(queryResult: any, direction: boolean, creationDate = false) {
-        return queryResult.sort(function (a: TaskType, b: TaskType) {
+        return queryResult.sort((a: TaskType, b: TaskType) => {
             let date1, date2;
 
             if (creationDate) {
@@ -66,7 +66,7 @@ class IndexController {
     }
 
     private sortByImportance(task: any, orderDirection: any): any {
-        return task.sort(function (a: TaskType, b: TaskType) {
+        return task.sort((a: TaskType, b: TaskType) => {
             if (orderDirection) {
                 return b.importance - a.importance;
             } else {
