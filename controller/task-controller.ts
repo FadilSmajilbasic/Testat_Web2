@@ -30,10 +30,7 @@ class TaskController {
         const id = req.url.split("/")[2];
         const action: string = req.body.action;
 
-        if (action === "Overview") {
-            // Overview case
-            res.redirect("/");
-        } else if (action?.includes("Update")) {
+        if (action?.includes("Update")) {
             taskStore.update(
                 id,
                 req.body.title,
