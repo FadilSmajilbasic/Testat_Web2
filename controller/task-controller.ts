@@ -1,4 +1,5 @@
 import { taskStore } from "../services/task-store";
+import { TaskType } from "../utils/types";
 
 class TaskController {
     index = (req: any, res: any) => {
@@ -9,7 +10,7 @@ class TaskController {
             res.redirect(req.originalUrl.split("?")[0]);
         } else {
             res.render("task-create", {
-                style: req.userSettings.dark?"dark":"light",
+                style: req.userSettings.dark ? "dark" : "light",
                 title: "New Task",
                 today: this.getDay(),
                 dueDate: this.getDay(),
@@ -27,52 +28,44 @@ class TaskController {
     }
 
     create = (req: any, res: any) => {
-        const id = req.url.split("/")[2];
+        const urlId = req.url.split("/")[2];
         const action: string = req.body.action;
 
-        if (action?.includes("Update")) {
-            taskStore.update(
-                id,
-                req.body.title,
-                req.body.importance,
-                req.body.description,
-                new Date(req.body.dueDate).toISOString(),
-                req.body.done === "on",
-                function (err: any, task: any) {
-                    if (err) {
-                        console.log("Error updating task: " + err);
-                        res.redirect("/?errorMessage=" + err);
-                    }
-                    if (action.includes("Overview")) {
-                        // Update and Overview case
-                        res.redirect("/");
-                    } else {
-                        // Update case
+        const task = {
+            title: req.body.title,
+            importance: Number(req.body.importance),
+            description: req.body.description,
+            creationDate: new Date(),
+            dueDate: new Date(req.body.dueDate).toLocaleDateString(),
+            done: req.body.done === "on",
+        } as TaskType;
 
-                        res.redirect("/task/edit/" + id + "/");
-                    }
+        if (action?.includes("Update")) {
+            taskStore.update({ ...task, id: urlId }, function (err: any, task: any) {
+                if (err) {
+                    res.redirect("/?errorMessage=" + err);
                 }
-            );
+                if (action.includes("Overview")) {
+                    // Update and Overview case
+                    res.redirect("/");
+                } else {
+                    // Update case
+                    res.redirect("/task/edit/" + urlId + "/");
+                }
+            });
         } else {
-            taskStore.add(
-                req.body.title,
-                req.body.importance,
-                req.body.description,
-                new Date(req.body.dueDate).toISOString(),
-                function (err: any, task: any) {
-                    if (err) {
-                        console.log("Error creating task: " + err);
-                        res.redirect("/?errorMessage=" + err);
-                    }
-                    if (action?.includes("Overview")) {
-                        // Create and Overview case
-                        res.redirect("/");
-                    } else {
-                        // Create case
-                        res.redirect("/task/edit/" + task._id + "/");
-                    }
+            taskStore.add(task, function (err: any, task: any) {
+                if (err) {
+                    res.redirect("/?errorMessage=" + err);
                 }
-            );
+                if (action?.includes("Overview")) {
+                    // Create and Overview case
+                    res.redirect("/");
+                } else {
+                    // Create case
+                    res.redirect("/task/edit/" + task._id + "/");
+                }
+            });
         }
     };
 
@@ -81,11 +74,9 @@ class TaskController {
         const currentDate = this.getDay();
         taskStore.get(id, function (err: any, task: any) {
             if (err) {
-                console.log("Task not found: " + err);
                 res.redirect("/?errorMessage=" + err);
             }
             if (task == null) {
-                console.log("Task not found: " + id);
                 res.redirect("/?errorMessage=Task not found with id: " + id);
             }
             res.render("task-create", {
@@ -109,7 +100,6 @@ class TaskController {
         const id = req.url.split("/")[2];
         taskStore.delete(id, function (err: any, task: any) {
             if (err) {
-                console.log("Error deleting task: " + err);
                 res.redirect("/?errorMessage=" + err);
             }
             res.redirect("/");

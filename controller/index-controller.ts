@@ -8,8 +8,6 @@ class IndexController {
             req.userSettings.errorMessage = "";
         }
 
-        console.log("settings", req.userSettings);
-
         taskStore.getAll((err, task) => {
             switch (req.userSettings.orderBy) {
                 case "title":
